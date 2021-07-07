@@ -3,20 +3,12 @@ const Task = require('../models/task');
 const router = express.Router();
 
 router.post('/tasks', async (req, res) => {
-	const findTask = await Task.find({});
-	const dupTask = findTask.find((task) => {
-		return task.description === req.body.description;
-	});
-	if (!dupTask) {
-		const task = new Task(req.body);
-		try {
-			await task.save();
-			res.status(201).send(task);
-		} catch (error) {
-			res.status(400).send(error);
-		}
-	} else {
-		res.status(400).send('Duplicate Task!');
+	const task = new Task(req.body);
+	try {
+		await task.save();
+		res.status(201).send(task);
+	} catch (error) {
+		res.status(400).send(error);
 	}
 });
 
