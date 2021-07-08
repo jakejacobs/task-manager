@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const auth = require('../middleware/auth');
 const router = express.Router();
 
 //user signup
@@ -25,7 +26,7 @@ router.post('/users/login', async (req, res) => {
 	}
 });
 
-router.get('/users', async (req, res) => {
+router.get('/users', auth, async (req, res) => {
 	try {
 		const user = await User.find({});
 		res.status(200).send(user);
